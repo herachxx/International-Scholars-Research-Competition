@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Login — ISRC 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="../css/style.css"/>
+<style>
+body { background: var(--cream); min-height: 100vh; display: flex; flex-direction: column; }
+.auth-layout { flex:1; display:flex; align-items:center; justify-content:center; padding:100px 24px 60px; }
+.auth-box {
+  background: var(--white); border-radius: var(--r); border: 1.5px solid var(--border);
+  box-shadow: var(--shadow); padding: 44px; width: 100%; max-width: 420px;
+}
+.auth-logo { display:flex; align-items:center; gap:10px; margin-bottom:32px; text-decoration:none; }
+.auth-logo svg { width:36px; height:36px; }
+.auth-logo span { font-family:var(--ff-h); font-size:18px; color:var(--ink); }
+.auth-box h2 { font-size:30px; margin-bottom:6px; }
+.auth-box .sub { color:var(--muted); font-size:14px; margin-bottom:28px; }
+.auth-box .sub a { color:var(--navy); font-weight:600; }
+.forgot { display:flex; justify-content:flex-end; margin-bottom:20px; }
+.forgot a { font-size:12px; color:var(--muted); }
+.forgot a:hover { color:var(--navy); }
+.divider { display:flex; align-items:center; gap:12px; margin:20px 0; }
+.divider::before,.divider::after { content:''; flex:1; height:1px; background:var(--border); }
+.divider span { font-size:11px; color:var(--muted); letter-spacing:.06em; }
+</style>
+</head>
+<body>
+<div id="nav-slot"></div>
+
+<div class="auth-layout">
+  <div class="auth-box">
+    <a href="../index.html" class="auth-logo">
+      <svg viewBox="0 0 44 44" fill="none">
+        <circle cx="22" cy="22" r="20" fill="#1C2B5A"/>
+        <circle cx="22" cy="22" r="14" fill="none" stroke="#B8882A" stroke-width="1" opacity=".7"/>
+        <polygon points="22,7 26,17.5 37.5,17.5 28.5,24 31.5,35 22,28.5 12.5,35 15.5,24 6.5,17.5 18,17.5" fill="#ffffff" opacity=".95"/>
+        <polygon points="22,11 25,19 34,19 27,24.5 29.5,33 22,28 14.5,33 17,24.5 10,19 19,19" fill="#B8882A" opacity=".85"/>
+      </svg>
+      <span>ISRC 2026</span>
+    </a>
+
+    <h2>Welcome back</h2>
+    <p class="sub">New here? <a href="register.html">Create an account →</a></p>
+
+    <div id="si-msg" class="alert"></div>
+
+    <div class="field"><label>Email address</label><input type="email" id="si-em" placeholder="you@university.edu"/></div>
+    <div class="field"><label>Password</label><input type="password" id="si-pw" placeholder="••••••••"/></div>
+
+    <div class="forgot"><a href="#">Forgot password?</a></div>
+
+    <button class="btn btn-navy btn-full" onclick="doLogin()">Sign In</button>
+
+    <div class="divider"><span>or</span></div>
+
+    <button class="btn btn-ghost btn-full" onclick="demoLogin()">Continue as Demo Scholar</button>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+  if (DB.getUser()) location.href = 'dashboard.html';
+  renderPublicNav('', '../');
+
+  function doLogin() {
+    const em = document.getElementById('si-em').value.trim();
+    const pw = document.getElementById('si-pw').value;
+    const msg = document.getElementById('si-msg');
+    const show = (t,m) => { msg.className='alert show alert-'+t; msg.textContent=m; };
+
+    if (!em || !pw) return show('err','Please enter your email and password.');
+    const user = DB.getUsers().find(u => u.email === em && u.pass === pw);
+    if (!user) return show('err','Invalid email or password. Try the demo login.');
+
+    DB.saveUser(user);
+    /* check for ?next redirect */
+    const params = new URLSearchParams(window.location.search);
+    const next = params.get('next');
+    location.href = next ? decodeURIComponent(next) : 'dashboard.html';
+  }
+
+  function demoLogin() {
+    const demo = {
+      fname:'Alex', lname:'Laurent', email:'demo@isrc.org',
+      inst:'University of Geneva', country:'Switzerland',
+      track:'Computer Science & AI', level:"Master's Student",
+      sup:'Prof. Maria Rossi', supEmail:'m.rossi@unige.ch',
+      resTitle:'Transformer architectures for low-resource multilingual NLP',
+      paid: false, certId:'ISRC-2026-CS-00482', submissions:[]
+    };
+    DB.saveUser(demo);
+    location.href = 'dashboard.html';
+  }
+</script>
+</body>
+</html>

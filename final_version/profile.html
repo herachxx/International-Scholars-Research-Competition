@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Profile — ISRC 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="../css/style.css"/>
+<style>
+body { background: var(--cream); }
+.wrap { max-width: 760px; margin: 0 auto; padding: 100px 32px 60px; }
+.page-title { margin-bottom: 28px; }
+.page-title h1 { font-size: 36px; }
+
+.profile-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 18px; }
+.profile-top  { background: var(--navy); padding: 28px 30px; display: flex; align-items: center; gap: 20px; }
+.profile-ava  { width: 64px; height: 64px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-family: var(--ff-h); font-size: 24px; color: var(--white); flex-shrink: 0; border: 2.5px solid rgba(255,255,255,.2); }
+.profile-hdr h3 { font-family: var(--ff-h); font-size: 22px; color: var(--white); }
+.profile-hdr p  { font-size: 13px; color: rgba(255,255,255,.5); margin-top: 3px; }
+
+.profile-body { padding: 0 26px; }
+.pf-row { display: flex; justify-content: space-between; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 6px; }
+.pf-row:last-child { border-bottom: none; }
+.pf-lbl { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.pf-val { font-size: 14px; color: var(--text); font-weight: 400; text-align: right; max-width: 60%; }
+
+.actions-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--r); padding: 24px; }
+.actions-card h4 { font-family: var(--ff-h); font-size: 20px; margin-bottom: 14px; }
+.actions-row { display: flex; flex-wrap: wrap; gap: 8px; }
+</style>
+</head>
+<body>
+<div id="nav-slot"></div>
+
+<div class="wrap">
+  <div class="page-title"><h1>My Profile</h1></div>
+
+  <div class="profile-card">
+    <div class="profile-top">
+      <div class="profile-ava" id="p-ava">AL</div>
+      <div class="profile-hdr">
+        <h3 id="p-name">Alex Laurent</h3>
+        <p id="p-email">—</p>
+        <p style="font-size:11px;color:rgba(255,255,255,.3);margin-top:3px">Member since January 2026</p>
+      </div>
+    </div>
+    <div class="profile-body">
+      <div class="pf-row"><span class="pf-lbl">Full Name</span><span class="pf-val" id="pf-name"></span></div>
+      <div class="pf-row"><span class="pf-lbl">Email</span><span class="pf-val" id="pf-email"></span></div>
+      <div class="pf-row"><span class="pf-lbl">Institution</span><span class="pf-val" id="pf-inst"></span></div>
+      <div class="pf-row"><span class="pf-lbl">Country</span><span class="pf-val" id="pf-country"></span></div>
+      <div class="pf-row"><span class="pf-lbl">Academic Level</span><span class="pf-val" id="pf-level"></span></div>
+      <div class="pf-row"><span class="pf-lbl">Research Track</span><span class="pf-val" id="pf-track"></span></div>
+      <div class="pf-row"><span class="pf-lbl">Supervisor</span><span class="pf-val" id="pf-sup"></span></div>
+      <div class="pf-row"><span class="pf-lbl">Certificate ID</span><span class="pf-val" id="pf-cert" style="font-size:12px;font-family:monospace"></span></div>
+      <div class="pf-row"><span class="pf-lbl">Payment Status</span><span class="pf-val" id="pf-pay" style="font-weight:600"></span></div>
+      <div class="pf-row"><span class="pf-lbl">Submissions</span><span class="pf-val" id="pf-subs"></span></div>
+    </div>
+  </div>
+
+  <div class="actions-card">
+    <h4>Quick Actions</h4>
+    <div class="actions-row">
+      <a href="dashboard.html"    class="btn btn-ghost btn-sm">Dashboard</a>
+      <a href="submit.html"       class="btn btn-ghost btn-sm">Submit Research</a>
+      <a href="submissions.html"  class="btn btn-ghost btn-sm">My Submissions</a>
+      <a href="certificate.html"  class="btn btn-ghost btn-sm">Certificate</a>
+      <a href="payment.html"      class="btn btn-ghost btn-sm">Payment</a>
+      <a href="competition-reg.html" class="btn btn-ghost btn-sm">Edit Registration</a>
+      <button onclick="toast('Email: support@isrc2026.org')" class="btn btn-ghost btn-sm">Support</button>
+      <button onclick="signOut()" class="btn btn-sm" style="background:none;border:1.5px solid #FECACA;color:#B91C1C;border-radius:var(--r)">Sign Out</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+  const u = requireAuth();
+  if (u) {
+    renderDashNav('Profile');
+    const full = u.fname + ' ' + u.lname;
+    const initials = (u.fname[0]+(u.lname?.[0]||'')).toUpperCase();
+
+    document.getElementById('p-ava').textContent     = initials;
+    document.getElementById('p-name').textContent    = full;
+    document.getElementById('p-email').textContent   = u.email;
+    document.getElementById('pf-name').textContent   = full;
+    document.getElementById('pf-email').textContent  = u.email;
+    document.getElementById('pf-inst').textContent   = u.inst    || '—';
+    document.getElementById('pf-country').textContent= u.country || '—';
+    document.getElementById('pf-level').textContent  = u.level   || '—';
+    document.getElementById('pf-track').textContent  = u.track   || '—';
+    document.getElementById('pf-sup').textContent    = u.sup ? `${u.sup} <${u.supEmail || ''}>` : '—';
+    document.getElementById('pf-cert').textContent   = u.certId  || '—';
+    document.getElementById('pf-subs').textContent   = `${u.submissions?.length || 0} submission(s)`;
+
+    const payEl = document.getElementById('pf-pay');
+    payEl.textContent = u.paid ? '✓ Paid' : 'Pending — complete payment';
+    payEl.style.color = u.paid ? '#166534' : '#92400E';
+  }
+</script>
+</body>
+</html>

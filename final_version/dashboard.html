@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard — ISRC 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="../css/style.css"/>
+<style>
+body { background: var(--cream); }
+
+.dash-wrap { max-width: 1040px; margin: 0 auto; padding: 100px 32px 60px; }
+
+/* Welcome banner */
+.welcome-bar {
+  background: var(--navy); border-radius: var(--r);
+  padding: 36px 40px; margin-bottom: 28px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.welcome-bar h2 { font-size: 28px; color: var(--white); margin-bottom: 4px; }
+.welcome-bar p  { color: rgba(255,255,255,.55); font-size: 14px; }
+.welcome-bar .btn { flex-shrink: 0; }
+
+/* Stat cards */
+.stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 28px; }
+.stat-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--r); padding: 22px 24px;
+  transition: box-shadow .2s;
+}
+.stat-card:hover { box-shadow: var(--shadow); }
+.stat-card-icon {
+  width: 40px; height: 40px; border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+}
+.stat-card-icon svg { width: 20px; height: 20px; }
+.stat-card .num { font-family: var(--ff-h); font-size: 34px; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+.stat-card .lbl { font-size: 12px; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; }
+
+/* Quick action cards */
+.qa-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; margin-bottom: 28px; }
+.qa-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--r); padding: 28px;
+  display: flex; align-items: flex-start; gap: 18px;
+  cursor: pointer; transition: all .2s; text-decoration: none; color: inherit;
+}
+.qa-card:hover { border-color: var(--navy); box-shadow: var(--shadow); transform: translateY(-2px); }
+.qa-icon {
+  width: 52px; height: 52px; border-radius: var(--r-sm); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.qa-icon svg { width: 24px; height: 24px; }
+.qa-card h4 { font-size: 17px; margin-bottom: 6px; }
+.qa-card p  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* Section card */
+.section-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--r); overflow: hidden; margin-bottom: 20px;
+}
+.section-card-head {
+  padding: 18px 24px; border-bottom: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.section-card-head h3 { font-family: var(--ff-b); font-size: 14px; font-weight: 600; color: var(--text); }
+.section-card-body { padding: 8px 0; }
+
+/* Timeline row */
+.tl-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 24px; border-bottom: 1px solid var(--border);
+}
+.tl-row:last-child { border-bottom: none; }
+.tl-row-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.tl-row-label { font-size: 13px; font-weight: 500; color: var(--text); flex: 1; }
+.tl-row-date  { font-size: 12px; color: var(--muted); }
+
+@media (max-width:860px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width:600px) { .qa-grid { grid-template-columns: 1fr; } .stat-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div id="nav-slot"></div>
+
+<div class="dash-wrap">
+
+  <!-- Welcome -->
+  <div class="welcome-bar">
+    <div>
+      <h2 id="dash-greeting">Good morning, Alex</h2>
+      <p id="dash-track">Computer Science & AI · University of Geneva</p>
+    </div>
+    <a href="submit.html" class="btn btn-gold">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Submit New Project
+    </a>
+  </div>
+
+  <!-- Stats -->
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-card-icon" style="background:#EEF1F9"><svg viewBox="0 0 24 24" fill="none" stroke="#1C2B5A" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <div class="num" id="stat-subs">0</div>
+      <div class="lbl">Submissions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon" style="background:#FBF4E8"><svg viewBox="0 0 24 24" fill="none" stroke="#B8882A" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+      <div class="num" id="stat-pay" style="font-size:20px;padding-top:8px">Pending</div>
+      <div class="lbl">Payment</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon" style="background:#ECFDF5"><svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+      <div class="num">1</div>
+      <div class="lbl">Certificate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-icon" style="background:#FEF2F2"><svg viewBox="0 0 24 24" fill="none" stroke="#B91C1C" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <div class="num">89</div>
+      <div class="lbl">Days Left</div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="qa-grid">
+    <a href="submit.html" class="qa-card">
+      <div class="qa-icon" style="background:#EEF1F9">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1C2B5A" stroke-width="1.8"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+      <div>
+        <h4>Submit New Project</h4>
+        <p>Upload your abstract or full research paper to the competition portal.</p>
+      </div>
+    </a>
+    <a href="submissions.html" class="qa-card">
+      <div class="qa-icon" style="background:#F0FDF4">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div>
+        <h4>View Submissions</h4>
+        <p>Review your submitted projects, statuses, and reviewer feedback.</p>
+      </div>
+    </a>
+    <a href="payment.html" class="qa-card">
+      <div class="qa-icon" style="background:#FBF4E8">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#B8882A" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      </div>
+      <div>
+        <h4>Payment Status</h4>
+        <p>View your registration fee status and complete payment if pending.</p>
+      </div>
+    </a>
+    <a href="profile.html" class="qa-card">
+      <div class="qa-icon" style="background:#F9F4FF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div>
+        <h4>Profile & Account</h4>
+        <p>Update your personal details, institution, and competition settings.</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- Timeline snapshot -->
+  <div class="section-card">
+    <div class="section-card-head">
+      <h3>Competition Schedule</h3>
+      <a href="../index.html#timeline" class="btn btn-ghost btn-sm">Full timeline</a>
+    </div>
+    <div class="section-card-body">
+      <div class="tl-row"><div class="tl-row-dot" style="background:#28a06a"></div><span class="tl-row-label">Registration Open</span><span class="tl-row-date tag tag-green" style="padding:3px 10px;border-radius:20px;font-size:11px">Complete</span></div>
+      <div class="tl-row"><div class="tl-row-dot" style="background:#28a06a"></div><span class="tl-row-label">Abstract Deadline</span><span class="tl-row-date tag tag-green" style="padding:3px 10px;border-radius:20px;font-size:11px">Passed — Mar 1</span></div>
+      <div class="tl-row"><div class="tl-row-dot" style="background:var(--gold)"></div><span class="tl-row-label">Full Paper Submission</span><span class="tl-row-date tag tag-gold" style="padding:3px 10px;border-radius:20px;font-size:11px">Jun 15, 2026</span></div>
+      <div class="tl-row"><div class="tl-row-dot" style="background:var(--border)"></div><span class="tl-row-label">Finalists Announced</span><span class="tl-row-date" style="font-size:12px;color:var(--muted)">Aug 30, 2026</span></div>
+      <div class="tl-row"><div class="tl-row-dot" style="background:var(--border)"></div><span class="tl-row-label">International Finals — Geneva</span><span class="tl-row-date" style="font-size:12px;color:var(--muted)">Oct 12–16, 2026</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+  const u = requireAuth();
+  if (u) {
+    renderDashNav('Overview');
+
+    const hr = new Date().getHours();
+    const greeting = hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('dash-greeting').textContent = `${greeting}, ${u.fname}`;
+    document.getElementById('dash-track').textContent = [u.track, u.inst].filter(Boolean).join(' · ') || 'Complete your registration details';
+
+    const subs = u.submissions?.length || 0;
+    document.getElementById('stat-subs').textContent = subs;
+
+    const payEl = document.getElementById('stat-pay');
+    payEl.textContent = u.paid ? '✓ Paid' : 'Pending';
+    payEl.style.color = u.paid ? '#166534' : '#B8882A';
+  }
+</script>
+</body>
+</html>
