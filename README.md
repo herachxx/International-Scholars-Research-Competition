@@ -2,7 +2,7 @@
 A global research competition recognizing outstanding student scholarship.
 
 **Prototype version's structure**  
-International-Scholars-Research-Competition/
+International-Scholars-Research-Competition/  
 ├── index.html          ← Sign up + Sign in
 ├── icon.svg            ← Program icon
 ├── css/
@@ -17,7 +17,7 @@ International-Scholars-Research-Competition/
     └── profile.html     ← User profile & quick actions
 
 **Final version's structure**  
-isrc2/
+International-Scholars-Research-Competition/  
 ├── index.html              ← Public landing page (HOME)
 ├── icon.svg                ← Program icon
 ├── css/style.css           ← All shared styles
