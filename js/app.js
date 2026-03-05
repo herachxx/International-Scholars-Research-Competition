@@ -166,7 +166,7 @@ function toggleAvatarMenu() {
   document.getElementById('_am').classList.toggle('open');
 }
 
-/* ── Credit card input formatters ── */
+/*Credit card input formatters*/
 function fmtCard(el) {
   el.value = el.value.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim();
 }
@@ -175,3 +175,19 @@ function fmtExp(el) {
   if (v.length >= 2) v = v.slice(0,2) + ' / ' + v.slice(2,4);
   el.value = v;
 }
+
+/*Navbar - hiding on scroll down, showing on scroll up*/
+let lastScrollY = window.scrollY;
+window.addEventListener('scroll', () => {
+   const nav = document.querySelector('.nav-float');
+   if (!nav) return;
+   const currentScrollY = window.scrollY;
+   /*if scrolled down 60px from the beginning of the page*/
+   if (currentScrollY > lastScrollY & currentScrollY > 60) {
+      nav.classList.remove('nav-hidden');
+   } else {
+      /*if scrolling up*/
+      nav.classList.remove('nav-hidden');
+   }
+   lastScrollY = currentScrollY;
+});
