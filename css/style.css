@@ -133,7 +133,7 @@ p  { font-family: var(--ff-b); line-height: 1.75; color: var(--text); }
   box-shadow: 0 8px 32px rgba(13,15,26,.1);
   height: 58px; display: flex; align-items: center;
   padding: 0 10px 0 20px; gap: 4px;
-  transition: top 0.35s ease-in-out; /*For fast and smooth animation of hiding and showing*/
+  transition: top 0.30s ease-in-out; /*For fast and smooth animation of hiding and showing*/
 }
 .nav-float.nav-hidden {
    top: -80px; /*To hide the nav bar beyond the page boundaries*/
