@@ -1,14 +1,12 @@
-/* ISRC 2026 · Shared JavaScript
-   Auth, DB, Nav, Toast, FAQ, Utils */
-
-/* ── localStorage helpers ── */
+/*LocalStorage helpers*/
 const DB = {
   getUsers:  ()  => JSON.parse(localStorage.getItem('isrc_users') || '[]'),
   saveUsers: (u) => localStorage.setItem('isrc_users', JSON.stringify(u)),
   getUser:   ()  => JSON.parse(localStorage.getItem('isrc_me')    || 'null'),
   saveUser:  (u) => localStorage.setItem('isrc_me',   JSON.stringify(u)),
   clearUser: ()  => localStorage.removeItem('isrc_me'),
-  /* Re-read from users array so logged-in copy is always up-to-date */
+   
+  /*Re-read from users array so logged-in copy is always up-to-date*/
   syncUser:  () => {
     const me = DB.getUser();
     if (!me) return null;
@@ -18,7 +16,7 @@ const DB = {
   }
 };
 
-/* ── Auth guard: redirect to login if not logged in ── */
+/*Auth guard: redirect to login if not signed in*/
 function requireAuth() {
   const u = DB.syncUser();
   if (!u) {
@@ -29,7 +27,7 @@ function requireAuth() {
   return u;
 }
 
-/* ── Save updated user back to both storage keys ── */
+/*Save updated user back to both storage keys*/
 function DB_updateUser(updates) {
   const me = Object.assign(DB.getUser(), updates);
   const users = DB.getUsers();
@@ -40,13 +38,13 @@ function DB_updateUser(updates) {
   return me;
 }
 
-/* ── Sign out ── */
+/*Sign out*/
 function signOut() {
   DB.clearUser();
   window.location.href = '../index.html';
 }
 
-/* ── Toast notification ── */
+/*Toast notification*/
 function toast(msg) {
   let t = document.getElementById('_toast');
   if (!t) {
@@ -62,10 +60,10 @@ function toast(msg) {
   t._tid = setTimeout(() => t.classList.remove('show'), 3400);
 }
 
-/* ── FAQ accordion ── */
+/*FAQ accordion*/
 function faq(btn) { btn.closest('.faq-item').classList.toggle('open'); }
 
-/* ── Logo HTML (shared by both navs) ── */
+/*Logo HTML (shared by both navs)*/
 function _logoHTML(prefix) {
   return `<a href="${prefix}index.html" class="nav-logo">
     <svg viewBox="0 0 44 44" fill="none">
@@ -81,7 +79,7 @@ function _logoHTML(prefix) {
   </a>`;
 }
 
-/* ── PUBLIC navbar (unauthenticated pages) ── */
+/*PUBLIC navbar (unauthenticated pages)*/
 function renderPublicNav(active, prefix) {
   prefix = prefix || '';
   const links = ['Home','About','Categories','Timeline','FAQ'];
@@ -104,9 +102,7 @@ function renderPublicNav(active, prefix) {
     </nav>`;
 }
 
-/* ── DASHBOARD navbar (authenticated pages) ──
-   Profile is NOT a nav link — only accessible via the avatar dropdown.
-   This is intentional: the avatar is the single entry point to account settings. */
+/*DASHBOARD navbar (authenticated pages)*/
 function renderDashNav(active) {
   const u = DB.getUser();
   if (!u) return;
@@ -152,7 +148,7 @@ function renderDashNav(active) {
       </div>
     </nav>`;
 
-  /* Close dropdown when clicking anywhere outside the avatar wrapper */
+  /*Close dropdown when clicking anywhere outside the avatar wrapper*/
   document.addEventListener('click', function handler(e) {
     const wrap = document.getElementById('_aw');
     if (wrap && !wrap.contains(e.target)) {
