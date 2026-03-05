@@ -184,7 +184,7 @@ window.addEventListener('scroll', () => {
    const currentScrollY = window.scrollY;
    /*if scrolled down 60px from the beginning of the page*/
    if (currentScrollY > lastScrollY & currentScrollY > 60) {
-      nav.classList.remove('nav-hidden');
+      nav.classList.add('nav-hidden');
    } else {
       /*if scrolling up*/
       nav.classList.remove('nav-hidden');
