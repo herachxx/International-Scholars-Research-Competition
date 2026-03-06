@@ -1,4 +1,3 @@
-/*LocalStorage helpers*/
 const DB = {
   getUsers:  ()  => JSON.parse(localStorage.getItem('isrc_users') || '[]'),
   saveUsers: (u) => localStorage.setItem('isrc_users', JSON.stringify(u)),
@@ -6,7 +5,6 @@ const DB = {
   saveUser:  (u) => localStorage.setItem('isrc_me',   JSON.stringify(u)),
   clearUser: ()  => localStorage.removeItem('isrc_me'),
    
-  /*Re-read from users array so logged-in copy is always up-to-date*/
   syncUser:  () => {
     const me = DB.getUser();
     if (!me) return null;
@@ -16,7 +14,6 @@ const DB = {
   }
 };
 
-/*Auth guard: redirect to login if not signed in*/
 function requireAuth() {
   const u = DB.syncUser();
   if (!u) {
@@ -27,7 +24,6 @@ function requireAuth() {
   return u;
 }
 
-/*Save updated user back to both storage keys*/
 function DB_updateUser(updates) {
   const me = Object.assign(DB.getUser(), updates);
   const users = DB.getUsers();
@@ -38,13 +34,11 @@ function DB_updateUser(updates) {
   return me;
 }
 
-/*Sign out*/
 function signOut() {
   DB.clearUser();
   window.location.href = '../index.html';
 }
 
-/*Toast notification*/
 function toast(msg) {
   let t = document.getElementById('_toast');
   if (!t) {
@@ -60,10 +54,10 @@ function toast(msg) {
   t._tid = setTimeout(() => t.classList.remove('show'), 3400);
 }
 
-/*FAQ accordion*/
-function faq(btn) { btn.closest('.faq-item').classList.toggle('open'); }
+function faq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
 
-/*Logo HTML (shared by both navs)*/
 function _logoHTML(prefix) {
   return `<a href="${prefix}index.html" class="nav-logo">
     <svg viewBox="0 0 44 44" fill="none">
@@ -79,7 +73,6 @@ function _logoHTML(prefix) {
   </a>`;
 }
 
-/*PUBLIC navbar (unauthenticated pages)*/
 function renderPublicNav(active, prefix) {
   prefix = prefix || '';
   const links = ['Home','About','Categories','Timeline','FAQ'];
@@ -102,7 +95,6 @@ function renderPublicNav(active, prefix) {
     </nav>`;
 }
 
-/*DASHBOARD navbar (authenticated pages)*/
 function renderDashNav(active) {
   const u = DB.getUser();
   if (!u) return;
@@ -148,7 +140,6 @@ function renderDashNav(active) {
       </div>
     </nav>`;
 
-  /*Close dropdown when clicking anywhere outside the avatar wrapper*/
   document.addEventListener('click', function handler(e) {
     const wrap = document.getElementById('_aw');
     if (wrap && !wrap.contains(e.target)) {
@@ -162,30 +153,42 @@ function toggleAvatarMenu() {
   document.getElementById('_am').classList.toggle('open');
 }
 
-/*Credit card input formatters*/
 function fmtCard(el) {
   el.value = el.value.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim();
 }
+
 function fmtExp(el) {
   let v = el.value.replace(/\D/g,'');
   if (v.length >= 2) v = v.slice(0,2) + ' / ' + v.slice(2,4);
   el.value = v;
 }
 
-/*Navbar - hiding on scroll down, showing on scroll up*/
+function showAlert(el, message, type) {
+  el.textContent = message;
+  el.className = 'alert show alert-' + type;
+  setTimeout(() => {
+    el.classList.remove('show');
+  }, 4000);
+}
+
+function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+}
+
+function validatePassword(pwd) {
+  return pwd.length >= 8;
+}
+
 let lastScrollY = window.scrollY;
 window.addEventListener('scroll', () => {
-   const nav = document.querySelector('.nav-float');
-   if (!nav) return;
-   const currentScrollY = window.scrollY;
-   /*if scrolled down 60px from the beginning of the page*/
-   if (currentScrollY > lastScrollY && currentScrollY > 60) {
-      // Скроллим вниз: ДОБАВЛЯЕМ класс для скрытия
-      nav.classList.add('nav-hidden');
-   } else {
-      /*if scrolling up*/
-      // Скроллим вверх: УБИРАЕМ класс, чтобы показать
-      nav.classList.remove('nav-hidden');
-   }
-   lastScrollY = currentScrollY;
+  const nav = document.querySelector('.nav-float');
+  if (!nav) return;
+  const currentScrollY = window.scrollY;
+  if (currentScrollY > lastScrollY && currentScrollY > 60) {
+    nav.classList.add('nav-hidden');
+  } else {
+    nav.classList.remove('nav-hidden');
+  }
+  lastScrollY = currentScrollY;
 });
