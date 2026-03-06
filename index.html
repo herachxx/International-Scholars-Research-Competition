@@ -7,11 +7,11 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml"/>
 <link rel="stylesheet" href="css/style.css"/>
 <style>
-/* ── Hero ── */
+/*Hero*/
 .hero {
   min-height: 92vh; background: var(--ink);
   display: flex; align-items: center; justify-content: center;
-  text-align: center; padding: 100px 24px 80px;
+  text-align: center; padding: 100px 24px 140px;
   position: relative; overflow: hidden;
 }
 .hero-dots {
@@ -37,10 +37,11 @@
   position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
   color: rgba(255,255,255,.3); font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
   display: flex; flex-direction: column; align-items: center; gap: 8px;
+  z-index: 10;
 }
 .hero-scroll-line { width: 1px; height: 48px; background: rgba(255,255,255,.15); }
 
-/* ── Stats strip ── */
+/*Stats strip*/
 .stats-strip {
   background: var(--cream); padding: 40px;
 }
@@ -51,7 +52,7 @@
 .stat-val { font-family: var(--ff-h); font-size: 48px; color: var(--ink); display: block; line-height: 1; }
 .stat-lbl { font-size: 12px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-top: 6px; display: block; }
 
-/* ── About ── */
+/*About*/
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
 .about-visual {
   background: var(--cream); border-radius: var(--r);
@@ -66,7 +67,7 @@
   border: 1.5px solid var(--border); font-size: 13px; font-weight: 500; color: var(--text);
 }
 
-/* ── Categories ── */
+/*Categories*/
 .cat-card {
   background: var(--white); border: 1.5px solid var(--border);
   border-radius: var(--r); padding: 28px;
@@ -84,7 +85,7 @@
 .cat-card p  { font-size: 13px; color: var(--muted); line-height: 1.7; }
 .cat-count { position: absolute; top: 20px; right: 20px; font-size: 11px; font-weight: 600; color: var(--muted); }
 
-/* ── Timeline ── */
+/*Timeline*/
 .timeline-wrap { max-width: 680px; margin: 0 auto; }
 .tl-item { display: flex; gap: 24px; padding-bottom: 36px; position: relative; }
 .tl-item:not(:last-child)::after {
@@ -101,7 +102,7 @@
 .tl-title { font-family: var(--ff-h); font-size: 22px; color: var(--ink); margin-bottom: 5px; }
 .tl-desc  { font-size: 14px; color: var(--muted); line-height: 1.7; }
 
-/* ── Prizes ── */
+/*Prizes*/
 .prizes-bg { background: var(--ink); }
 .prize-card {
   background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
@@ -114,7 +115,7 @@
 .prize-amount { font-family: var(--ff-h); font-size: 40px; color: var(--gold-l); margin-bottom: 8px; }
 .prize-desc  { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.65; }
 
-/* ── CTA banner ── */
+/*CTA banner*/
 .cta-banner {
   background: var(--navy); border-radius: var(--r);
   padding: 56px 48px; text-align: center; margin: 0 40px;
@@ -123,7 +124,7 @@
 .cta-banner p  { color: rgba(255,255,255,.55); font-size: 16px; margin-bottom: 28px; max-width: 480px; margin-inline: auto; }
 .cta-banner .hero-btns { margin-top: 0; }
 
-/* ── Footer ── */
+/*Footer*/
 footer {
   background: var(--ink); color: rgba(255,255,255,.4);
   text-align: center; padding: 32px 24px;
@@ -144,7 +145,7 @@ footer a:hover { color: var(--white); }
 <body>
 <div id="nav-slot"></div>
 
-<!-- ════ HERO ════ -->
+<!--HERO-->
 <section class="hero" id="home">
   <div class="hero-dots"></div>
   <div class="hero-inner">
@@ -159,7 +160,7 @@ footer a:hover { color: var(--white); }
   <div class="hero-scroll"><span>Scroll</span><div class="hero-scroll-line"></div></div>
 </section>
 
-<!-- ════ STATS ════ -->
+<!--STATS-->
 <div class="stats-strip">
   <div class="stats-inner">
     <div style="text-align:center"><span class="stat-val">48+</span><span class="stat-lbl">Countries</span></div>
@@ -170,7 +171,7 @@ footer a:hover { color: var(--white); }
   </div>
 </div>
 
-<!-- ════ ABOUT ════ -->
+<!--ABOUT-->
 <section class="section" id="about">
   <div class="about-grid">
     <div class="about-visual">
@@ -198,7 +199,7 @@ footer a:hover { color: var(--white); }
 
 <div class="divider"></div>
 
-<!-- ════ CATEGORIES ════ -->
+<!--CATEGORIES-->
 <section class="section" id="categories">
   <div class="section-head center">
     <span class="eyebrow">Research Tracks</span>
@@ -245,7 +246,7 @@ footer a:hover { color: var(--white); }
   </div>
 </section>
 
-<!-- ════ PRIZES ════ -->
+<!--PRIZES-->
 <div class="prizes-bg">
   <div class="section">
     <div class="section-head center" style="color:white">
@@ -283,7 +284,7 @@ footer a:hover { color: var(--white); }
   </div>
 </div>
 
-<!-- ════ TIMELINE ════ -->
+<!--TIMELINE-->
 <section class="section" id="timeline">
   <div class="section-head center">
     <span class="eyebrow">Key Dates</span>
@@ -315,7 +316,7 @@ footer a:hover { color: var(--white); }
 
 <div class="divider"></div>
 
-<!-- ════ FAQ ════ -->
+<!--FAQ-->
 <section class="section-sm section" id="faq" style="max-width:760px">
   <div class="section-head center">
     <span class="eyebrow">Frequently Asked Questions</span>
@@ -343,7 +344,7 @@ footer a:hover { color: var(--white); }
   </div>
 </section>
 
-<!-- ════ CTA ════ -->
+<!--CTA-->
 <div style="padding:0 0 80px">
   <div class="cta-banner">
     <h2>Ready to Make Your Mark?</h2>
@@ -362,11 +363,11 @@ footer a:hover { color: var(--white); }
 
 <script src="js/app.js"></script>
 <script>
-  /* ── Nav: if logged in show avatar + dashboard, else show login/register ── */
+  /*if logged in show avatar + dashboard, else show login/register*/
   const me = DB.getUser();
   if (me) {
     renderPublicNav('Home');
-    /* Replace right-side actions with avatar dropdown for logged-in users */
+    /*Replace right-side actions with avatar dropdown for logged-in users*/
     const initials = (me.fname[0] + (me.lname ? me.lname[0] : '')).toUpperCase();
     document.querySelector('.nav-actions').innerHTML = `
       <a href="pages/dashboard.html" class="btn btn-navy btn-sm">My Dashboard</a>
