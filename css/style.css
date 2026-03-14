@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 :root {
   --ink:      #0D0F1A;
@@ -18,8 +18,8 @@
   --r-sm:     14px;
   --r-xs:     8px;
   --nav-h:    68px;
-  --ff-h:     'DM Serif Display', serif;
-  --ff-b:     'DM Sans', sans-serif;
+  --ff-h:     'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ff-b:     'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 *, *::before, *::after {
@@ -56,26 +56,23 @@ h1, h2, h3, h4 {
   font-family: var(--ff-h);
   line-height: 1.12;
   color: var(--ink);
+  font-weight: 700;
 }
 
 h1 {
   font-size: clamp(40px, 6vw, 80px);
-  font-weight: 400;
 }
 
 h2 {
   font-size: clamp(28px, 4vw, 50px);
-  font-weight: 400;
 }
 
 h3 {
   font-size: clamp(20px, 2.5vw, 28px);
-  font-weight: 400;
 }
 
 h4 {
   font-size: 18px;
-  font-weight: 400;
 }
 
 p {
@@ -101,9 +98,11 @@ p {
   letter-spacing: .02em;
   cursor: pointer;
   border: none;
-  transition: transform .18s ease-out, box-shadow .18s ease-out, background .18s ease-out;
+  transition: transform .18s ease-out, box-shadow .18s ease-out, background .18s ease-out, backdrop-filter .18s ease-out;
   white-space: nowrap;
   line-height: 1;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .btn:hover {
@@ -121,55 +120,59 @@ p {
 }
 
 .btn-ink {
-  background: var(--ink);
+  background: rgba(13, 15, 26, 0.75);
   color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .btn-ink:hover {
-  background: #1a1d2e;
+  background: rgba(26, 29, 46, 0.85);
   box-shadow: 0 8px 20px rgba(13,15,26,.22);
 }
 
 .btn-gold {
-  background: var(--gold);
+  background: rgba(184, 136, 42, 0.75);
   color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .btn-gold:hover {
-  background: var(--gold-l);
+  background: rgba(212, 165, 68, 0.9);
   box-shadow: 0 8px 20px rgba(184,136,42,.28);
 }
 
 .btn-navy {
-  background: var(--navy);
+  background: rgba(28, 43, 90, 0.75);
   color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .btn-navy:hover {
-  background: var(--navy-mid);
+  background: rgba(36, 51, 112, 0.9);
   box-shadow: 0 8px 20px rgba(28,43,90,.25);
 }
 
 .btn-ghost {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.5);
   color: var(--ink);
-  border: 1.5px solid var(--border);
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
 }
 
 .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.75);
   border-color: var(--ink);
   box-shadow: var(--shadow-l);
 }
 
 .btn-ghost-light {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.08);
   color: var(--white);
-  border: 1.5px solid var(--white);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
 }
 
 .btn-ghost-light:hover {
-  background: var(--white);
-  color: var(--ink);
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--white);
   box-shadow: var(--shadow-l);
 }
 
@@ -401,6 +404,16 @@ p {
   position: relative;
 }
 
+/* My Dashboard button in nav: solid navy to match avatar background */
+.nav-actions > .btn-navy {
+  background: var(--navy);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.nav-actions > .btn-navy:hover {
+  background: var(--navy-mid);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
 .nav-avatar {
   width: 36px;
   height: 36px;
@@ -566,6 +579,11 @@ p {
 }
 
 .section-head h2 em {
+  font-style: italic;
+}
+
+.hero-accent {
+  font-family: 'Playfair Display', Georgia, serif;
   font-style: italic;
 }
 
