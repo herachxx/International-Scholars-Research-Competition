@@ -33,6 +33,62 @@ body { background: var(--cream); }
   color: var(--muted); padding: 14px 0 10px; border-top: 1px solid var(--border); margin-top: 8px;
 }
 .section-label:first-child { border-top: none; padding-top: 0; }
+
+/* Ethics checkbox: circle, dark blue + white check when checked */
+.ethics-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+}
+.ethics-wrap input {
+  position: absolute;
+  opacity: 0;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  cursor: pointer;
+}
+.ethics-box {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+.ethics-box::after {
+  content: '';
+  width: 6px;
+  height: 10px;
+  border: solid var(--white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translateY(-1px);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.ethics-wrap input:checked + .ethics-box {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+.ethics-wrap input:checked + .ethics-box::after {
+  opacity: 1;
+}
+.ethics-wrap input:focus-visible + .ethics-box {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
 </style>
 </head>
 <body>
@@ -106,8 +162,9 @@ body { background: var(--cream); }
     <div class="file-name" id="file-name"></div>
 
     <div class="field" style="margin-top:24px">
-      <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;text-transform:none;letter-spacing:0;font-size:13px;font-weight:400;color:var(--text)">
-        <input type="checkbox" id="s-ethics" style="width:16px;height:16px;margin-top:1px;flex-shrink:0;accent-color:var(--navy)"/>
+      <label class="ethics-wrap">
+        <input type="checkbox" id="s-ethics"/>
+        <span class="ethics-box" aria-hidden="true"></span>
         I confirm this is original work, not previously published in a peer-reviewed journal, and that all sources are properly cited. I have read and agree to the ISRC Academic Ethics Policy.
       </label>
     </div>
