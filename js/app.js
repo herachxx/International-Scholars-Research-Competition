@@ -192,3 +192,72 @@ window.addEventListener('scroll', () => {
   }
   lastScrollY = currentScrollY;
 });
+
+/**
+ * Parse numeric display string into { value, prefix, suffix }.
+ * Handles: "2,400+", "48", "$120K", "89", "1", "0". Returns null if not numeric.
+ */
+function parseNumberDisplay(text) {
+  if (!text || typeof text !== 'string') return null;
+  const trimmed = text.trim();
+  const match = trimmed.match(/^([^0-9.,]*)([0-9,]+(?:\.[0-9]+)?)([^0-9.,]*)$/);
+  if (!match) return null;
+  const rawNum = match[2].replace(/,/g, '');
+  const num = parseFloat(rawNum, 10);
+  if (Number.isNaN(num)) return null;
+  return { value: num, prefix: match[1] || '', suffix: match[3] || '' };
+}
+
+function formatNumberDisplay(value, prefix, suffix) {
+  const intVal = Math.round(value);
+  const str = intVal.toLocaleString();
+  return prefix + str + suffix;
+}
+
+function easeOutCubic(t) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+const NUMBER_ANIM_DURATION = 1500; // ms
+const NUMBER_ANIM_START_RATIO = 0.8;
+
+/**
+ * Animate a single element's numeric content from 80% to 100% over 1.5s.
+ */
+function animateElementNumber(el) {
+  const parsed = parseNumberDisplay(el.textContent);
+  if (!parsed) return;
+  const { value, prefix, suffix } = parsed;
+  const startVal = value * NUMBER_ANIM_START_RATIO;
+  const start = performance.now();
+  function tick(now) {
+    const elapsed = now - start;
+    const t = Math.min(elapsed / NUMBER_ANIM_DURATION, 1);
+    const eased = easeOutCubic(t);
+    const current = startVal + (value - startVal) * eased;
+    el.textContent = formatNumberDisplay(current, prefix, suffix);
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+/**
+ * Find all number elements (.stat-val, .stat-card .num, .num) and run 80%→100% animation over 1.5s.
+ */
+function animateNumbers(root) {
+  root = root || document;
+  const selectors = '.stat-val, .stat-card .num, .num';
+  root.querySelectorAll(selectors).forEach(el => {
+    if (parseNumberDisplay(el.textContent)) animateElementNumber(el);
+  });
+}
+
+function initNumberAnimations() {
+  animateNumbers();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initNumberAnimations);
+} else {
+  initNumberAnimations();
+}
