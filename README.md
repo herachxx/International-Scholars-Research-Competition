@@ -1,11 +1,31 @@
 # MIT Critical Data Global Research Challenge
 - a global research competition recognizing outstanding student scholarship.
 
-**Prototype version's structure - 2 March 2026**  
-<img width="424" height="178" alt="image" src="https://github.com/user-attachments/assets/41a7150d-f328-4e87-8705-e2cf08e4c68a" />
+MIT-Critical-Data-Global-Research-Challenge/
+│
+├── index.html                   homepage (landing page)
+├── login.html                   login page
+├── register.html                create account (step 1 of 2)
+├── competition-register.html    competition registration + payment (step 2 of 2)
+├── submit.html                  submit research (gated - redirects if not logged in)
+├── dashboard.html               authenticated dashboard (post-login)
+│
+├── style.css                    global stylesheet (all pages)
+├── main.js                      shared javascript (navbar, FAQ, scroll, session)
+│
+└── assets/                      all images and logos
+    ├── website-background.png
+    ├── MIT-Critical-Data-Global-Research-Competition-website-logo.png
+    ├── MIT-university-logo.png
+    ├── MIT-critical-data-logo.png
+    ├── Stanford-university-logo.png
+    ├── NSRI_logo.png
+    ├── synthica-logo.jpg
+    ├── HackClub-logo.jpg
+    └── ColdMatch-logo.jpg
 
-**Final version's structure - x March 2026**  
-<img width="410" height="328" alt="Screenshot 2026-03-06 160150" src="https://github.com/user-attachments/assets/e10a05d8-275c-4d1c-b7cc-b4aab39ad1fc" />
 
-Contact information:
-aruzhanmaratova2009@gmail.com
+
+
+
+    
