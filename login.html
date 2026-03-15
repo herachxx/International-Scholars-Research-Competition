@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login · MIT Critical Data Global Research Challenge</title>
+  <link rel="icon" type="image/png" href="assets/MIT-Critical-Data-Global-Research-Competition-website-logo.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/MIT-Critical-Data-Global-Research-Competition-website-logo.png" alt="Logo" class="nav-logo-img"/>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#categories">Categories</a></li>
+      <li><a href="index.html#timeline">Timeline</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="submit.html">Submit</a></li>
+      <li><a href="login.html" class="nav-login-btn active">Login</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="index.html#about">About</a>
+  <a href="index.html#categories">Categories</a>
+  <a href="index.html#timeline">Timeline</a>
+  <a href="index.html#faq">FAQ</a>
+  <a href="submit.html">Submit</a>
+  <a href="login.html" class="mobile-login">Login</a>
+</div>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <a href="index.html"><img src="assets/MIT-Critical-Data-Global-Research-Competition-website-logo.png" alt="Logo"/></a>
+      <a href="index.html"><span>MIT Critical Data<br/>Research Challenge</span></a>
+    </div>
+    <h1 class="auth-title">Welcome back</h1>
+    <p class="auth-subtitle">Sign in to access your research dashboard</p>
+
+    <div id="loginError" class="alert alert-warning" style="display:none;">
+      <span>⚠️</span> <span id="loginErrorMsg">Invalid credentials. Please try again.</span>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="email">Email address</label>
+      <input type="email" id="email" class="form-input" placeholder="you@university.edu" autocomplete="email"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="password">Password</label>
+      <input type="password" id="password" class="form-input" placeholder="••••••••" autocomplete="current-password"/>
+    </div>
+
+    <div style="text-align:right; margin-bottom: 24px;">
+      <a href="#" style="font-size:0.82rem; color: var(--mit-red);">Forgot password?</a>
+    </div>
+
+    <button class="btn-primary auth-submit" id="loginBtn" onclick="handleLogin()">Sign In</button>
+
+    <p class="auth-alt">Don't have an account? <a href="register.html">Create account</a></p>
+
+    <div class="auth-divider"><span>or</span></div>
+
+    <p style="text-align:center; font-size:0.82rem; color:var(--gray-3);">New to the competition? <a href="register.html" style="color:var(--mit-red); font-weight:600;">Register to submit research →</a></p>
+  </div>
+</div>
+
+<script src="main.js"></script>
+<script>
+function handleLogin() {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const errDiv = document.getElementById('loginError');
+  const errMsg = document.getElementById('loginErrorMsg');
+
+  if (!email || !password) {
+    errMsg.textContent = 'Please fill in all fields.';
+    errDiv.style.display = 'flex';
+    return;
+  }
+
+  const btn = document.getElementById('loginBtn');
+  btn.innerHTML = '<span class="spinner"></span> Signing in...';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    const users = JSON.parse(localStorage.getItem('mitrc_users') || '[]');
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if (user) {
+      localStorage.setItem('mitrc_session', JSON.stringify({ email: user.email, name: user.name, id: user.id }));
+      window.location.href = 'dashboard.html';
+    } else {
+      errMsg.textContent = 'Invalid email or password. Please try again.';
+      errDiv.style.display = 'flex';
+      btn.innerHTML = 'Sign In';
+      btn.disabled = false;
+    }
+  }, 800);
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') handleLogin();
+});
+</script>
+</body>
+</html>
