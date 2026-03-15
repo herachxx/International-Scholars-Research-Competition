@@ -5,35 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Competition Registration · MIT Critical Data Global Research Challenge</title>
   <link rel="icon" type="image/png" href="assets/MIT-Critical-Data-Global-Research-Competition-website-logo.png"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
-  <style>
-    .fee-breakdown {
-      background: var(--off-white);
-      border: 1px solid var(--gray-5);
-      border-radius: var(--radius-sm);
-      padding: 20px 24px;
-      margin-bottom: 20px;
-    }
-    .fee-breakdown-row { display: flex; justify-content: space-between; padding: 7px 0; font-size: 0.875rem; color: var(--gray-2); border-bottom: 1px solid var(--gray-5); }
-    .fee-breakdown-row:last-child { border-bottom: none; font-weight: 700; color: var(--dark); font-size: 0.95rem; padding-top: 12px; }
-    .fee-breakdown-row span:last-child { color: var(--mit-red); }
-    .team-member-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
-    .team-member-row .form-input { flex: 1; }
-    .remove-member { background: none; border: 1.5px solid var(--gray-5); border-radius: 8px; padding: 13px 14px; cursor: pointer; color: var(--gray-3); font-size: 0.85rem; transition: all 0.2s; white-space: nowrap; }
-    .remove-member:hover { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,0.05); }
-    .add-member-btn { background: none; border: 1.5px dashed var(--gray-4); border-radius: var(--radius-sm); padding: 11px 20px; cursor: pointer; color: var(--gray-3); font-size: 0.85rem; font-family: var(--font-sans); transition: all 0.2s; width: 100%; text-align: center; }
-    .add-member-btn:hover { border-color: var(--mit-red); color: var(--mit-red); background: rgba(163,31,52,0.03); }
-    .payment-method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .payment-option { border: 1.5px solid var(--gray-5); border-radius: var(--radius-sm); padding: 16px 20px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px; }
-    .payment-option:hover { border-color: var(--mit-red); }
-    .payment-option.selected { border-color: var(--mit-red); background: rgba(163,31,52,0.04); }
-    .payment-option input[type=radio] { accent-color: var(--mit-red); width: 16px; height: 16px; }
-    .payment-option-label { font-size: 0.875rem; font-weight: 600; color: var(--dark); }
-    .payment-option-sub { font-size: 0.75rem; color: var(--gray-3); }
-  </style>
 </head>
 <body>
 
@@ -41,6 +16,7 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
       <img src="assets/MIT-Critical-Data-Global-Research-Competition-website-logo.png" alt="Logo" class="nav-logo-img"/>
+      <span class="nav-logo-text">MIT Critical Data<br/>Research Challenge</span>
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
@@ -49,197 +25,170 @@
       <li><a href="index.html#timeline">Timeline</a></li>
       <li><a href="index.html#faq">FAQ</a></li>
       <li><a href="submit.html">Submit</a></li>
-      <li><a href="login.html" class="nav-login-btn">Login</a></li>
+      <li><a href="login.html" class="nav-cta">Login</a></li>
     </ul>
-    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="index.html#about">About</a>
+  <a href="index.html#categories">Categories</a>
+  <a href="index.html#timeline">Timeline</a>
+  <a href="index.html#faq">FAQ</a>
+  <a href="submit.html">Submit</a>
+  <a href="login.html" class="m-cta">Login</a>
+</div>
 
 <div class="reg-page">
   <div class="reg-card">
-    <div style="text-align:center; margin-bottom: 24px;">
-      <a href="index.html"><img src="assets/MIT-Critical-Data-Global-Research-Competition-website-logo.png" style="width:44px; height:44px; object-fit:contain; margin: 0 auto 8px;"/></a>
+    <div class="auth-logo" style="justify-content:flex-start;margin-bottom:28px;">
+      <a href="index.html"><img src="assets/MIT-Critical-Data-Global-Research-Competition-website-logo.png" alt="Logo" style="width:38px;height:38px;object-fit:contain;border-radius:7px;"/></a>
+      <a href="index.html" style="font-family:var(--serif);font-size:.88rem;font-weight:600;color:var(--ink);line-height:1.3;">MIT Critical Data<br/>Research Challenge</a>
     </div>
     <h1>Competition Registration</h1>
-    <p class="subtitle">Step 2 of 2 — Tell us about your research project.</p>
+    <p class="sub">Step 2 of 2 — Tell us about your research project and complete payment.</p>
 
-    <div class="step-indicator">
+    <div class="steps">
       <div class="step done"></div>
       <div class="step active"></div>
     </div>
 
-    <div class="alert alert-info" style="margin-bottom: 28px;">
+    <div class="alert alert-info">
       <span>ℹ️</span> Entry fee: <strong>$30</strong> covers registration + 1 submission. Additional projects: <strong>+$10 each</strong>.
     </div>
 
-    <div id="compError" class="alert alert-warning" style="display:none;">
-      <span>⚠️</span> <span id="compErrorMsg"></span>
+    <div id="compErr" class="alert alert-error" style="display:none;">
+      <span>⚠️</span><span id="compErrMsg"></span>
     </div>
 
-    <!-- Project Title -->
-    <div class="form-section">
-      <div class="form-section-title">Project Details</div>
+    <!-- Project Details -->
+    <div class="form-sec">
+      <div class="form-sec-title">Project Details</div>
       <div class="form-group">
-        <label class="form-label" for="projectTitle">Research Project Title *</label>
-        <input type="text" id="projectTitle" class="form-input" placeholder="e.g. Deep Learning Approaches to Early Cancer Detection"/>
+        <label class="form-label" for="title">Research Project Title *</label>
+        <input type="text" id="title" class="form-input" placeholder="e.g. Deep Learning Approaches to Early Cancer Detection"/>
       </div>
       <div class="form-group">
-        <label class="form-label" for="category">Research Category *</label>
-        <select id="category" class="form-input">
+        <label class="form-label" for="cat">Research Category *</label>
+        <select id="cat" class="form-input">
           <option value="">Select a category</option>
-          <option>Health & Life Sciences</option>
-          <option>Engineering & Technology</option>
-          <option>Physical & Chemical Sciences</option>
-          <option>Environmental & Earth Sciences</option>
-          <option>Social Sciences, Humanities & Policy</option>
+          <option>Health &amp; Life Sciences</option>
+          <option>Engineering &amp; Technology</option>
+          <option>Physical &amp; Chemical Sciences</option>
+          <option>Environmental &amp; Earth Sciences</option>
+          <option>Social Sciences, Humanities &amp; Policy</option>
         </select>
       </div>
       <div class="form-group">
         <label class="form-label" for="abstract">Abstract / Brief Description *</label>
-        <textarea id="abstract" class="form-input" rows="4" placeholder="Provide a brief overview of your research (100–300 words)" style="resize: vertical;"></textarea>
+        <textarea id="abstract" class="form-input" rows="4" placeholder="Provide a brief overview of your research (100–300 words)"></textarea>
       </div>
     </div>
 
     <!-- Team Members -->
-    <div class="form-section">
-      <div class="form-section-title">Team Members (Max 3)</div>
-      <p style="font-size: 0.85rem; color: var(--gray-3); margin-bottom: 16px;">You are listed as Team Lead. Add additional members below (optional).</p>
-      <div id="teamMembers"></div>
-      <button type="button" class="add-member-btn" id="addMemberBtn" onclick="addMember()">+ Add Team Member</button>
+    <div class="form-sec">
+      <div class="form-sec-title">Team Members <span style="font-weight:400;color:var(--faint);font-size:.82rem;">(Max 3 total)</span></div>
+      <p style="font-size:.84rem;color:var(--faint);margin-bottom:14px;">You are listed as Team Lead. Add up to 2 additional members below (optional).</p>
+      <div id="teamRows"></div>
+      <button type="button" class="add-btn" id="addMember" onclick="addMember()">+ Add Team Member</button>
     </div>
 
-    <!-- Entry Fee -->
-    <div class="form-section">
-      <div class="form-section-title">Entry Fee</div>
-      <div class="fee-breakdown" id="feeBreakdown">
-        <div class="fee-breakdown-row"><span>Registration + 1 Submission</span><span>$30</span></div>
-        <div class="fee-breakdown-row" id="extraRow" style="display:none;"><span id="extraLabel">Additional Projects</span><span id="extraCost">$0</span></div>
-        <div class="fee-breakdown-row"><span>Total Due</span><span id="totalFee">$30</span></div>
+    <!-- Fee Breakdown -->
+    <div class="form-sec">
+      <div class="form-sec-title">Entry Fee</div>
+      <div class="fee-breakdown" id="feeBox">
+        <div class="fb-row"><span>Registration + 1 Submission</span><span>$30</span></div>
+        <div class="fb-row" id="extraRow" style="display:none;"><span id="extraLabel">Additional Projects</span><span id="extraAmt">$0</span></div>
+        <div class="fb-row"><span>Total Due</span><span id="totalDue">$30</span></div>
       </div>
+
       <div class="form-group">
         <label class="form-label">Payment Method</label>
-        <div class="payment-method-grid">
-          <div class="payment-option selected" onclick="selectPayment(this, 'card')">
-            <input type="radio" name="payment" value="card" checked/>
-            <div>
-              <div class="payment-option-label">💳 Credit / Debit Card</div>
-              <div class="payment-option-sub">Visa, Mastercard, Amex</div>
-            </div>
+        <div class="pay-opts">
+          <div class="pay-opt selected" onclick="selPay(this,'card')">
+            <input type="radio" name="pm" value="card" checked/>
+            <div><div class="pay-opt-name">💳 Credit / Debit Card</div><div class="pay-opt-sub">Visa, Mastercard, Amex</div></div>
           </div>
-          <div class="payment-option" onclick="selectPayment(this, 'paypal')">
-            <input type="radio" name="payment" value="paypal"/>
-            <div>
-              <div class="payment-option-label">🔵 PayPal</div>
-              <div class="payment-option-sub">Secure PayPal checkout</div>
-            </div>
+          <div class="pay-opt" onclick="selPay(this,'paypal')">
+            <input type="radio" name="pm" value="paypal"/>
+            <div><div class="pay-opt-name">🔵 PayPal</div><div class="pay-opt-sub">Secure PayPal checkout</div></div>
           </div>
         </div>
       </div>
+
       <div id="cardFields">
+        <div class="form-group"><label class="form-label" for="cname">Name on Card *</label><input type="text" id="cname" class="form-input" placeholder="Jane Smith"/></div>
         <div class="form-group">
-          <label class="form-label" for="cardName">Name on Card *</label>
-          <input type="text" id="cardName" class="form-input" placeholder="Jane Smith"/>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="cardNumber">Card Number *</label>
-          <input type="text" id="cardNumber" class="form-input" placeholder="•••• •••• •••• ••••" maxlength="19" oninput="formatCard(this)"/>
+          <label class="form-label" for="cnum">Card Number *</label>
+          <input type="text" id="cnum" class="form-input" placeholder="•••• •••• •••• ••••" maxlength="19" oninput="fmtCard(this)"/>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="cardExpiry">Expiry *</label>
-            <input type="text" id="cardExpiry" class="form-input" placeholder="MM/YY" maxlength="5"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="cardCvv">CVV *</label>
-            <input type="text" id="cardCvv" class="form-input" placeholder="•••" maxlength="4"/>
-          </div>
+          <div class="form-group"><label class="form-label" for="cexp">Expiry *</label><input type="text" id="cexp" class="form-input" placeholder="MM/YY" maxlength="5"/></div>
+          <div class="form-group"><label class="form-label" for="ccvv">CVV *</label><input type="text" id="ccvv" class="form-input" placeholder="•••" maxlength="4"/></div>
         </div>
       </div>
     </div>
 
-    <button class="btn-primary auth-submit" id="compBtn" onclick="handleCompReg()">Complete Registration & Pay →</button>
-    <p class="auth-alt" style="margin-top: 12px;">Already registered? <a href="login.html">Sign in to your dashboard</a></p>
+    <button class="btn-primary form-submit" id="compBtn" onclick="doCompReg()">Complete Registration &amp; Pay →</button>
+    <p class="form-alt">Already registered? <a href="login.html">Sign in to your dashboard</a></p>
   </div>
 </div>
 
 <script src="main.js"></script>
 <script>
-let memberCount = 0;
+let memCount = 0;
 
 function addMember() {
-  if (memberCount >= 2) return;
-  memberCount++;
-  const container = document.getElementById('teamMembers');
-  const row = document.createElement('div');
-  row.className = 'team-member-row';
-  row.id = 'member_' + memberCount;
-  row.innerHTML = `
-    <input type="text" class="form-input" placeholder="Member ${memberCount + 1} Full Name"/>
-    <input type="email" class="form-input" placeholder="Email"/>
-    <button class="remove-member" onclick="removeMember(${memberCount})">✕ Remove</button>
-  `;
-  container.appendChild(row);
-  if (memberCount >= 2) document.getElementById('addMemberBtn').style.display = 'none';
+  if (memCount >= 2) return;
+  memCount++;
+  const c = document.getElementById('teamRows');
+  const r = document.createElement('div');
+  r.className = 'team-row'; r.id = 'tr'+memCount;
+  r.innerHTML = `<input type="text" class="form-input" placeholder="Member ${memCount+1} Full Name"/><input type="email" class="form-input" placeholder="Email"/><button class="remove-btn" onclick="removeMember(${memCount})">✕ Remove</button>`;
+  c.appendChild(r);
+  if (memCount>=2) document.getElementById('addMember').style.display='none';
 }
 
 function removeMember(id) {
-  const row = document.getElementById('member_' + id);
-  if (row) row.remove();
-  memberCount--;
-  document.getElementById('addMemberBtn').style.display = 'block';
+  const r = document.getElementById('tr'+id);
+  if (r) r.remove();
+  memCount--;
+  document.getElementById('addMember').style.display='block';
 }
 
-function selectPayment(el, type) {
-  document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  el.querySelector('input').checked = true;
-  document.getElementById('cardFields').style.display = type === 'card' ? 'block' : 'none';
+function selPay(el, type) {
+  document.querySelectorAll('.pay-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected'); el.querySelector('input').checked=true;
+  document.getElementById('cardFields').style.display = type==='card'?'block':'none';
 }
 
-function formatCard(input) {
-  let val = input.value.replace(/\D/g,'');
-  val = val.match(/.{1,4}/g)?.join(' ') || val;
-  input.value = val;
+function fmtCard(i) {
+  let v=i.value.replace(/\D/g,'');
+  i.value=(v.match(/.{1,4}/g)||[v]).join(' ');
 }
 
-function handleCompReg() {
-  const session = JSON.parse(localStorage.getItem('mitrc_session') || 'null');
-  if (!session) { window.location.href = 'register.html'; return; }
+function doCompReg() {
+  const sess=JSON.parse(localStorage.getItem('mitrc_session')||'null');
+  if (!sess) { location.href='register.html'; return; }
+  const title=document.getElementById('title').value.trim();
+  const cat=document.getElementById('cat').value;
+  const abs=document.getElementById('abstract').value.trim();
+  const err=document.getElementById('compErr'), msg=document.getElementById('compErrMsg'), btn=document.getElementById('compBtn');
+  if (!title||!cat||!abs) { msg.textContent='Please fill in all required project fields.'; err.style.display='flex'; return; }
 
-  const title = document.getElementById('projectTitle').value.trim();
-  const category = document.getElementById('category').value;
-  const abstract = document.getElementById('abstract').value.trim();
-  const errDiv = document.getElementById('compError');
-  const errMsg = document.getElementById('compErrorMsg');
-
-  if (!title || !category || !abstract) {
-    errMsg.textContent = 'Please fill in all required project fields.';
-    errDiv.style.display = 'flex';
-    return;
-  }
-
-  const btn = document.getElementById('compBtn');
-  btn.innerHTML = '<span class="spinner"></span> Processing payment...';
-  btn.disabled = true;
-
-  setTimeout(() => {
-    const users = JSON.parse(localStorage.getItem('mitrc_users') || '[]');
-    const idx = users.findIndex(u => u.id === session.id);
-    if (idx !== -1) {
-      users[idx].registered = true;
-      users[idx].submissions = users[idx].submissions || [];
-      users[idx].submissions.push({
-        id: 'sub_' + Date.now(),
-        title,
-        category,
-        abstract,
-        status: 'pending',
-        submittedAt: new Date().toISOString()
-      });
-      localStorage.setItem('mitrc_users', JSON.stringify(users));
+  btn.innerHTML='<span class="spinner"></span> Processing payment…'; btn.disabled=true;
+  setTimeout(()=>{
+    const users=JSON.parse(localStorage.getItem('mitrc_users')||'[]');
+    const idx=users.findIndex(u=>u.id===sess.id);
+    if (idx!==-1) {
+      users[idx].registered=true;
+      users[idx].submissions=users[idx].submissions||[];
+      users[idx].submissions.push({id:'s_'+Date.now(),title,category:cat,abstract:abs,status:'pending',submittedAt:new Date().toISOString()});
+      localStorage.setItem('mitrc_users',JSON.stringify(users));
     }
-    window.location.href = 'dashboard.html';
-  }, 1500);
+    location.href='dashboard.html';
+  }, 1400);
 }
 </script>
 </body>
