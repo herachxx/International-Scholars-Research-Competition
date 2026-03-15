@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard · MIT Critical Data Global Research Challenge</title>
+  <link rel="icon" type="image/png" href="assets/MIT-Critical-Data-Global-Research-Competition-website-logo.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .tab-nav { display: flex; gap: 4px; background: var(--off-white); border: 1px solid var(--gray-5); border-radius: var(--radius-sm); padding: 4px; margin-bottom: 32px; width: fit-content; }
+    .tab-btn { padding: 9px 20px; border-radius: 10px; border: none; background: none; font-family: var(--font-sans); font-size: 0.875rem; font-weight: 500; color: var(--gray-3); cursor: pointer; transition: all 0.2s; }
+    .tab-btn.active { background: var(--white); color: var(--dark); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .empty-state { text-align: center; padding: 60px 40px; color: var(--gray-3); }
+    .empty-state-icon { font-size: 3rem; margin-bottom: 16px; }
+    .empty-state h3 { font-family: var(--font-serif); font-size: 1.2rem; color: var(--gray-2); margin-bottom: 8px; }
+    .empty-state p { font-size: 0.875rem; margin-bottom: 24px; }
+    .timeline-mini { display: flex; flex-direction: column; gap: 16px; }
+    .timeline-mini-item { display: flex; gap: 16px; align-items: flex-start; padding: 16px 20px; background: var(--white); border: 1px solid var(--gray-5); border-radius: var(--radius-sm); }
+    .timeline-mini-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gray-4); margin-top: 5px; flex-shrink: 0; }
+    .timeline-mini-dot.upcoming { background: var(--mit-red); }
+    .timeline-mini-date { font-size: 0.78rem; font-weight: 700; color: var(--mit-red); letter-spacing: 0.04em; width: 80px; flex-shrink: 0; padding-top: 1px; }
+    .timeline-mini-text h4 { font-size: 0.9rem; font-weight: 600; color: var(--dark); margin-bottom: 3px; }
+    .timeline-mini-text p { font-size: 0.8rem; color: var(--gray-3); }
+    .notification-dot { width: 8px; height: 8px; background: var(--mit-red); border-radius: 50%; display: inline-block; margin-left: 6px; }
+    body { background: var(--off-white); }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-logo">
+      <img src="assets/MIT-Critical-Data-Global-Research-Competition-website-logo.png" alt="Logo"/>
+      <span>MIT Critical Data<br/>Research Challenge</span>
+    </a>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="#" class="active" onclick="showTab('overview')" id="nav-overview"><span class="nav-icon">🏠</span> Overview</a></li>
+        <li><a href="#" onclick="showTab('submissions')" id="nav-submissions"><span class="nav-icon">📄</span> My Submissions</a></li>
+        <li><a href="#" onclick="showTab('submit-new')" id="nav-submit-new"><span class="nav-icon">➕</span> Submit New Project</a></li>
+        <li><a href="#" onclick="showTab('payment')" id="nav-payment"><span class="nav-icon">💳</span> Payment Status</a></li>
+        <li><a href="#" onclick="showTab('profile')" id="nav-profile"><span class="nav-icon">👤</span> Profile</a></li>
+      </ul>
+    </nav>
+    <button class="sidebar-logout" onclick="logout()">
+      <span>🚪</span> Sign Out
+    </button>
+  </aside>
+
+  <div class="dashboard-main">
+    <header class="dashboard-topbar">
+      <div class="topbar-title" id="topbarTitle">Dashboard Overview</div>
+      <div class="topbar-user">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <span class="user-name" id="userName">Loading...</span>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+
+      <!-- OVERVIEW TAB -->
+      <div class="tab-panel active" id="tab-overview">
+        <div class="dash-welcome">
+          <h1 id="welcomeMsg">Welcome back!</h1>
+          <p>Here's a summary of your competition status.</p>
+        </div>
+
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="dash-card-icon">📄</div>
+            <div class="dash-card-num" id="subCount">0</div>
+            <div class="dash-card-label">Submissions</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-icon">⏳</div>
+            <div class="dash-card-num">May 30</div>
+            <div class="dash-card-label">Deadline</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-icon">💰</div>
+            <div class="dash-card-num" id="paymentCard">$30</div>
+            <div class="dash-card-label">Amount Paid</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-icon">🏆</div>
+            <div class="dash-card-num">$10K+</div>
+            <div class="dash-card-label">Student Awards</div>
+          </div>
+        </div>
+
+        <div class="dash-section">
+          <div class="dash-section-header">
+            <h2>Competition Timeline</h2>
+          </div>
+          <div class="timeline-mini">
+            <div class="timeline-mini-item">
+              <div class="timeline-mini-dot upcoming"></div>
+              <div class="timeline-mini-date">May 30</div>
+              <div class="timeline-mini-text">
+                <h4>Paper Submission Deadline</h4>
+                <p>Online submission portal closes at 11:59 PM EST</p>
+              </div>
+            </div>
+            <div class="timeline-mini-item">
+              <div class="timeline-mini-dot"></div>
+              <div class="timeline-mini-date">May 31–Jun 6</div>
+              <div class="timeline-mini-text">
+                <h4>Blind Review Period</h4>
+                <p>Top 300 → Research Distinction · Top 100 → Semi-Finalist · Top 40 → Global Finalist</p>
+              </div>
+            </div>
+            <div class="timeline-mini-item">
+              <div class="timeline-mini-dot"></div>
+              <div class="timeline-mini-date">Jun 7–10</div>
+              <div class="timeline-mini-text">
+                <h4>Finalist Confirmation</h4>
+                <p>Top 40 Global Finalists confirmed · Travel & logistics coordination</p>
+              </div>
+            </div>
+            <div class="timeline-mini-item">
+              <div class="timeline-mini-dot"></div>
+              <div class="timeline-mini-date">June 13</div>
+              <div class="timeline-mini-text">
+                <h4>🏆 Finals Day — Winners Announced</h4>
+                <p>Oral presentation + Q&A · Judged by PhD researchers, Associate Professors & Professors</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBMISSIONS TAB -->
+      <div class="tab-panel" id="tab-submissions">
+        <div class="dash-welcome">
+          <h1>My Submissions</h1>
+          <p>View and manage all your submitted research projects.</p>
+        </div>
+        <div class="dash-section">
+          <div class="dash-section-header">
+            <h2>Submitted Papers</h2>
+            <button class="btn-primary" onclick="showTab('submit-new')" style="padding:10px 20px; font-size:0.85rem;">+ Submit New</button>
+          </div>
+          <div id="submissionsContent">
+            <div class="empty-state">
+              <div class="empty-state-icon">📭</div>
+              <h3>No submissions yet</h3>
+              <p>Submit your first research paper to get started.</p>
+              <button class="btn-primary" onclick="showTab('submit-new')">Submit Your Research →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBMIT NEW TAB -->
+      <div class="tab-panel" id="tab-submit-new">
+        <div class="dash-welcome">
+          <h1>Submit New Project</h1>
+          <p>Add an additional research project. Each extra submission is $10.</p>
+        </div>
+        <div class="submit-card" style="max-width: 680px; background: var(--white); border: 1px solid var(--gray-5); border-radius: var(--radius); padding: 40px; box-shadow: var(--shadow);">
+          <div id="submitSuccess" class="alert alert-success" style="display:none; margin-bottom:20px;">
+            <span>✅</span> Project submitted successfully!
+          </div>
+          <div class="form-section">
+            <div class="form-section-title">Project Information</div>
+            <div class="form-group">
+              <label class="form-label" for="newTitle">Research Title *</label>
+              <input type="text" id="newTitle" class="form-input" placeholder="Full title of your research paper"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="newCategory">Category *</label>
+              <select id="newCategory" class="form-input">
+                <option value="">Select a category</option>
+                <option>Health & Life Sciences</option>
+                <option>Engineering & Technology</option>
+                <option>Physical & Chemical Sciences</option>
+                <option>Environmental & Earth Sciences</option>
+                <option>Social Sciences, Humanities & Policy</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="newAbstract">Abstract *</label>
+              <textarea id="newAbstract" class="form-input" rows="4" placeholder="Brief description of your research (100–300 words)" style="resize:vertical;"></textarea>
+            </div>
+          </div>
+          <div class="form-section">
+            <div class="form-section-title">Upload Paper (PDF)</div>
+            <div class="file-upload" onclick="document.getElementById('paperFile').click()">
+              <div class="file-upload-icon">📎</div>
+              <p><strong>Click to upload</strong> or drag and drop your PDF</p>
+              <p style="margin-top:6px; font-size:0.78rem; color:var(--gray-4);">PDF only · Max 20MB</p>
+              <input type="file" id="paperFile" accept=".pdf"/>
+            </div>
+            <div id="fileNameDisplay" style="font-size:0.82rem; color:var(--mit-red); margin-top: 8px; display:none;"></div>
+          </div>
+          <div class="alert alert-warning">
+            <span>💳</span> This additional submission will incur a <strong>$10</strong> fee processed separately.
+          </div>
+          <button class="btn-primary" style="width:100%; padding:15px;" onclick="submitNewProject()">Submit Project →</button>
+        </div>
+      </div>
+
+      <!-- PAYMENT TAB -->
+      <div class="tab-panel" id="tab-payment">
+        <div class="dash-welcome">
+          <h1>Payment Status</h1>
+          <p>Your billing and payment history.</p>
+        </div>
+        <div class="payment-card">
+          <h3 style="font-family:var(--font-serif); font-size:1.2rem; margin-bottom:20px; color:var(--dark);">Payment Summary</h3>
+          <div class="payment-row">
+            <span>Registration + 1st Submission</span>
+            <strong>$30.00</strong>
+          </div>
+          <div class="payment-row" id="additionalPayRow" style="display:none;">
+            <span id="additionalPayLabel">Additional Submissions</span>
+            <strong id="additionalPayAmt">$0.00</strong>
+          </div>
+          <div class="payment-row">
+            <span>Payment Status</span>
+            <span class="status-badge status-accepted">✓ Paid</span>
+          </div>
+          <div class="payment-row">
+            <span><strong>Total Charged</strong></span>
+            <strong class="payment-total" id="totalCharged">$30.00</strong>
+          </div>
+        </div>
+        <div style="margin-top:24px;" class="alert alert-info">
+          <span>ℹ️</span> For billing questions, contact <strong>support@mitresearchchallenge.org</strong>
+        </div>
+      </div>
+
+      <!-- PROFILE TAB -->
+      <div class="tab-panel" id="tab-profile">
+        <div class="dash-welcome">
+          <h1>Your Profile</h1>
+          <p>Manage your account information.</p>
+        </div>
+        <div class="profile-grid">
+          <div class="profile-card">
+            <h3>Account Information</h3>
+            <div id="profileInfo"></div>
+          </div>
+          <div class="profile-card">
+            <h3>Competition Status</h3>
+            <div class="payment-row" style="border:none; padding:8px 0;">
+              <span style="font-size:0.875rem;">Registration</span>
+              <span class="status-badge status-accepted">✓ Complete</span>
+            </div>
+            <div class="payment-row" style="border:none; padding:8px 0;">
+              <span style="font-size:0.875rem;">Payment</span>
+              <span class="status-badge status-accepted">✓ Paid</span>
+            </div>
+            <div class="payment-row" style="border:none; padding:8px 0;">
+              <span style="font-size:0.875rem;">Review Stage</span>
+              <span class="status-badge status-pending">Pending</span>
+            </div>
+            <div style="margin-top:24px; padding-top:20px; border-top:1px solid var(--gray-5);">
+              <button class="btn-primary" style="width:100%; padding:12px;" onclick="logout()">Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end dashboard-content -->
+  </div><!-- end dashboard-main -->
+</div><!-- end dashboard-layout -->
+
+<script src="main.js"></script>
+<script>
+const session = JSON.parse(localStorage.getItem('mitrc_session') || 'null');
+if (!session) window.location.href = 'login.html';
+
+function getUser() {
+  const users = JSON.parse(localStorage.getItem('mitrc_users') || '[]');
+  return users.find(u => u.id === session.id) || {};
+}
+
+function initDashboard() {
+  const user = getUser();
+  const name = user.name || session.name || 'Researcher';
+  const initials = name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+
+  document.getElementById('userName').textContent = name;
+  document.getElementById('userAvatar').textContent = initials;
+  document.getElementById('welcomeMsg').textContent = 'Welcome back, ' + (user.firstName || name.split(' ')[0]) + '!';
+
+  const subs = user.submissions || [];
+  document.getElementById('subCount').textContent = subs.length;
+
+  const additionalSubs = Math.max(0, subs.length - 1);
+  const totalPaid = 30 + (additionalSubs * 10);
+  document.getElementById('paymentCard').textContent = '$' + totalPaid;
+  document.getElementById('totalCharged').textContent = '$' + totalPaid + '.00';
+
+  if (additionalSubs > 0) {
+    document.getElementById('additionalPayRow').style.display = 'flex';
+    document.getElementById('additionalPayLabel').textContent = additionalSubs + ' Additional Submission(s)';
+    document.getElementById('additionalPayAmt').textContent = '$' + (additionalSubs * 10) + '.00';
+  }
+
+  // Submissions table
+  const subsContent = document.getElementById('submissionsContent');
+  if (subs.length > 0) {
+    subsContent.innerHTML = `
+      <table class="submissions-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Project Title</th>
+            <th>Category</th>
+            <th>Submitted</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${subs.map((s,i) => `
+            <tr>
+              <td style="color:var(--gray-3);">${i+1}</td>
+              <td style="font-weight:500; color:var(--dark);">${s.title}</td>
+              <td>${s.category}</td>
+              <td>${new Date(s.submittedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</td>
+              <td><span class="status-badge status-${s.status}">${s.status.charAt(0).toUpperCase()+s.status.slice(1)}</span></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  }
+
+  // Profile info
+  document.getElementById('profileInfo').innerHTML = `
+    <div class="payment-row" style="border-bottom:1px solid var(--gray-5); padding:10px 0;">
+      <span style="font-size:0.85rem; color:var(--gray-3);">Full Name</span>
+      <span style="font-size:0.875rem; font-weight:600;">${user.name || '—'}</span>
+    </div>
+    <div class="payment-row" style="border-bottom:1px solid var(--gray-5); padding:10px 0;">
+      <span style="font-size:0.85rem; color:var(--gray-3);">Email</span>
+      <span style="font-size:0.875rem;">${user.email || session.email}</span>
+    </div>
+    <div class="payment-row" style="border-bottom:1px solid var(--gray-5); padding:10px 0;">
+      <span style="font-size:0.85rem; color:var(--gray-3);">Institution</span>
+      <span style="font-size:0.875rem;">${user.institution || '—'}</span>
+    </div>
+    <div class="payment-row" style="border-bottom:1px solid var(--gray-5); padding:10px 0;">
+      <span style="font-size:0.85rem; color:var(--gray-3);">Country</span>
+      <span style="font-size:0.875rem;">${user.country || '—'}</span>
+    </div>
+    <div class="payment-row" style="padding:10px 0;">
+      <span style="font-size:0.85rem; color:var(--gray-3);">Academic Level</span>
+      <span style="font-size:0.875rem;">${user.grade || '—'}</span>
+    </div>
+  `;
+}
+
+function showTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const navEl = document.getElementById('nav-' + name);
+  if (navEl) navEl.classList.add('active');
+  const titles = { overview: 'Dashboard Overview', submissions: 'My Submissions', 'submit-new': 'Submit New Project', payment: 'Payment Status', profile: 'Profile' };
+  document.getElementById('topbarTitle').textContent = titles[name] || 'Dashboard';
+}
+
+function submitNewProject() {
+  const title = document.getElementById('newTitle').value.trim();
+  const category = document.getElementById('newCategory').value;
+  const abstract = document.getElementById('newAbstract').value.trim();
+  if (!title || !category || !abstract) { alert('Please fill in all required fields.'); return; }
+
+  const users = JSON.parse(localStorage.getItem('mitrc_users') || '[]');
+  const idx = users.findIndex(u => u.id === session.id);
+  if (idx !== -1) {
+    users[idx].submissions.push({ id: 'sub_' + Date.now(), title, category, abstract, status: 'pending', submittedAt: new Date().toISOString() });
+    localStorage.setItem('mitrc_users', JSON.stringify(users));
+  }
+
+  document.getElementById('newTitle').value = '';
+  document.getElementById('newCategory').value = '';
+  document.getElementById('newAbstract').value = '';
+  document.getElementById('submitSuccess').style.display = 'flex';
+  setTimeout(() => { document.getElementById('submitSuccess').style.display = 'none'; initDashboard(); }, 2500);
+}
+
+function logout() {
+  localStorage.removeItem('mitrc_session');
+  window.location.href = 'index.html';
+}
+
+document.getElementById('paperFile').addEventListener('change', function() {
+  const fname = this.files[0]?.name;
+  const display = document.getElementById('fileNameDisplay');
+  if (fname) { display.textContent = '📎 ' + fname; display.style.display = 'block'; }
+});
+
+initDashboard();
+</script>
+</body>
+</html>
