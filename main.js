@@ -2,25 +2,17 @@
 
 (function () {
 
-  /* Header: transparent → frosted glass + auto-hide*/
+  /* Header: transparent → frosted glass on scroll */
   const header = document.getElementById('site-header');
 
   if (header) {
     const SOLID = 80;
-    const HIDE  = 200;
-    let lastY   = window.scrollY;
-    let ticking = false;
+    let ticking  = false;
 
     function updateHeader() {
       const y = window.scrollY;
       header.classList.toggle('scrolled', y > SOLID);
       header.classList.toggle('on-hero',  y <= SOLID);
-      if (y > HIDE) {
-        header.classList.toggle('hidden', y > lastY + 4);
-      } else {
-        header.classList.remove('hidden');
-      }
-      lastY   = y;
       ticking = false;
     }
 
@@ -142,6 +134,8 @@
     });
   });
 
+
+  /* Lazy image fade-in */
   function initLazyImage(img) {
     // Determine if this image should have fade-in
     const isLazy = img.loading === 'lazy' || img.classList.contains('lazy-img');
